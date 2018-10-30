@@ -14,8 +14,19 @@ div#login-main-container {
   display: inline-block;
 }
 
+@media (max-width: 450px) {
+  .typewriter-text h1 {
+    font-size: 1.5em;
+  }
+}
+
+@media (min-width: 451px) {
+  .typewriter-text h1 {
+    font-size: 3em;
+  }
+}
+
 .typewriter-text h1 {
-  font-size: 1.5em;
   color: @text-normal;
   font-family: monospace;
   overflow: hidden; 
