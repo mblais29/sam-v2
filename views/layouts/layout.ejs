@@ -17,8 +17,11 @@
 
     <% /* Auto-injected «link» tags: */ %>
     <!--STYLES-->
+    <link rel="stylesheet" href="/dependencies/leaflet/leaflet.css">
+    <link rel="stylesheet" href="/dependencies/leaflet/leaflet-draw/leaflet.draw.css">
     <link rel="stylesheet" href="/dependencies/bootstrap-4/bootstrap-4.css">
     <link rel="stylesheet" href="/dependencies/font-awesome-4/css/font-awesome.css">
+    <link rel="stylesheet" href="/dependencies/leaflet/leaflet-draw/leaflet.draw-src.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <!--STYLES END-->
   </head>
@@ -113,8 +116,11 @@
     <script src="/dependencies/jquery.min.js"></script>
     <script src="/dependencies/bowser.js"></script>
     <script src="/dependencies/vue.js"></script>
+    <script src="/dependencies/leaflet/leaflet.js"></script>
+    <script src="/dependencies/leaflet/leaflet-draw/leaflet.draw.js"></script>
     <script src="/dependencies/bootstrap-4/bootstrap-4.bundle.js"></script>
     <script src="/dependencies/cloud.js"></script>
+    <script src="/dependencies/leaflet/leaflet-draw/leaflet.draw-src.js"></script>
     <script src="/dependencies/parasails.js"></script>
     <script src="/js/cloud.setup.js"></script>
     <script src="/js/components/ajax-button.component.js"></script>
@@ -137,5 +143,6 @@
     <script src="/js/pages/legal/privacy.page.js"></script>
     <script src="/js/pages/legal/terms.page.js"></script>
     <!--SCRIPTS END-->
+    <%- blocks.localScripts %>
   </body>
 </html>
