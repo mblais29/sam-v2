@@ -1,0 +1,103 @@
+<div id="edit-profile" v-cloak>
+  <div class="container">
+  	<div class="row">
+        <div class="col-sm-6">
+    		<h1>Map Layers</h1>
+    	</div>
+    	<div class="col-sm-6">
+    		<button type="button" class="btn btn-outline-primary float-right" onclick="openAddMapLayerForm()">Add</button>
+    	</div>
+    </div>
+    <hr/>
+    <div id="maplayers-container" >
+    	
+    </div>
+    <div id="maplayers-add-container" >
+	    <ajax-form action="#" :syncing.sync="syncing"  @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+	      <div class="row">
+	        <div class="col-sm-6">
+	          <div class="form-group">
+	            <label for="maplayers-id">ID</label>
+	            <input class="form-control" id="maplayers-id" name="maplayers-id" type="text"  :class="[formErrors.fullName ? 'is-invalid' : '']" autocomplete="name" focus-first readonly>
+	            <div class="invalid-feedback" v-if="">No Map ID Specified.</div>
+	          </div>
+	        </div>
+	        <div class="col-sm-6">
+	          <div class="form-group">
+	            <label for="maplayers-layerid">Layer ID</label>
+	            <input class="form-control" id="maplayers-layerid" name="maplayers-layerid" type="text"  :class="[formErrors.emailAddress ? 'is-invalid' : '']" >
+	            <div class="invalid-feedback" v-if="">No Layer ID.</div>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="col-sm-6">
+	          <div class="form-group">
+	            <label for="maplayers-name">Layer Name</label>
+	            <input class="form-control" id="maplayers-name" name="maplayers-name" type="text"  :class="[formErrors.emailAddress ? 'is-invalid' : '']" >
+	            <div class="invalid-feedback" v-if="">No Layer Name.</div>
+	          </div>
+	        </div>
+	        <div class="col-sm-6">
+	          <div class="form-group">
+	            <label for="maplayers-layertype">Layer Type</label>
+	            <input class="form-control" id="maplayers-layertype" name="maplayers-layertype" type="text"  :class="[formErrors.emailAddress ? 'is-invalid' : '']" >
+	            <div class="invalid-feedback" v-if="">No Layer Type Specified.</div>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="col-sm-4">
+	          <div class="form-group">
+			  	<label for="maplayers-table">Table</label>
+	            <input class="form-control" id="maplayers-table" name="maplayers-table" type="text"  :class="[formErrors.emailAddress ? 'is-invalid' : '']" >
+	            <div class="invalid-feedback" v-if="">No Table Referenced.</div>
+			  </div>
+	        </div>
+	        <div class="col-sm-4">
+	          	<label for="maplayers-min">Minimum Zoom</label>
+	            <input class="form-control" id="maplayers-min" name="maplayers-min" type="text"  :class="[formErrors.emailAddress ? 'is-invalid' : '']" >
+	            <div class="invalid-feedback" v-if="">No Minimum Zoom Set.</div>
+	        </div>
+	        <div class="col-sm-4">
+	        	<label for="maplayers-max">Maximum Zoom</label>
+	            <input class="form-control" id="maplayers-max" name="maplayers-max" type="text"  :class="[formErrors.emailAddress ? 'is-invalid' : '']" >
+	            <div class="invalid-feedback" v-if="">No Maximum Zoom Set.</div>
+	        </div>
+	      </div>
+	      <div class="row">
+	      	<div class="col-sm-12">
+	      		<div class="form-group">
+					<label for="maplayers-att">Attributes to Display:</label>
+					<textarea class="form-control" rows="3" id="maplayers-att" :class="[formErrors.emailAddress ? 'is-invalid' : '']"></textarea>
+					<div class="invalid-feedback" v-if="">No Attributes.</div>
+				</div>
+	      	</div>
+	      </div>
+	      <div class="row">
+	      	<div class="col-sm-12">
+	      		<div class="form-group">
+					<label for="maplayers-url">URL:</label>
+					<textarea class="form-control" rows="3" id="maplayers-url" :class="[formErrors.emailAddress ? 'is-invalid' : '']"></textarea>
+					<div class="invalid-feedback" v-if="">No URL.</div>
+				</div>
+	      	</div>
+	      </div>
+	      <div class="row">
+	        <div class="col-sm-6">
+	          <p class="text-danger" v-if="cloudError === 'emailAlreadyInUse'">There is already an account using that email address.</p>
+	          <p class="text-danger" v-else-if="cloudError">An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</p>
+	        </div>
+	        <div class="col-sm-6">
+	          <div class="form-group text-right">
+	            <button class="btn btn-warning fontColor" onclick="hideAddForm()">Cancel</button>
+	            <ajax-button type="submit" <%/* :syncing="syncing" */%> class="btn btn-success">Save changes</ajax-button>
+	          </div>
+	        </div>
+	      </div>
+	    </ajax-form>
+    </div>
+  </div>
+</div>
+<% block('localScripts', '<script src="/js/local/map/maplayers.page.js"></script>') %>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

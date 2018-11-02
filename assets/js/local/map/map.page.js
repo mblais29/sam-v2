@@ -170,5 +170,5 @@ function onMapClick(e) {
 function setMapHeightWidth(){
 	/* 36 is the header and footer padding summed together 16px each */
 	var height = $(window).height() - $('#page-header').outerHeight() - $('#page-footer').outerHeight();
-	$("#map").height(height).width($(window).outerWidth());
+	$("#map").height(height).width($(window).outerWidth()).css("zIndex", "1");
 }

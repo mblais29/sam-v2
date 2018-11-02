@@ -17,7 +17,9 @@ module.exports.routes = {
   'GET /':                   { action: 'view-homepage-or-redirect' },
   'GET /welcome':            { action: 'dashboard/view-welcome' },
   'GET /map':                { action: 'dashboard/view-map' },
-
+  'GET /maplayers':          { action: 'dashboard/view-maplayers' },
+  'GET /maplayers/records':  { controller: 'view-maplayers', action: 'getMaplayerRecords' },
+  
   'GET /faq':                { view:   'pages/faq' },
   'GET /legal/terms':        { view:   'pages/legal/terms' },
   'GET /legal/privacy':      { view:   'pages/legal/privacy' },
