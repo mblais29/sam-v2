@@ -75,6 +75,7 @@ var jsFilesToInject = [
   'dependencies/vue.js',
   'dependencies/leaflet/leaflet.js',
   'dependencies/leaflet/leaflet-draw/leaflet.draw.js',
+  'dependencies/leaflet/leaflet-esri/esri-leaflet.js',
   'dependencies/**/*.js',
 
   // First amongst the app-level files, bring in cloud configuration
