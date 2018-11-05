@@ -44,7 +44,7 @@ module.exports = {
 		defaultsTo: 20
 	}
 
-  },
+  }
 
 };
 

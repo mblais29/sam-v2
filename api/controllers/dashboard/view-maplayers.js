@@ -22,16 +22,7 @@ module.exports = {
 	
 	
 	fn: async function (inputs, exits) {
-		/* GET Maplayer data --> not working need to fix */
-			await Maplayers.find().catch((err) => {
-				return exits.error();
-			}).then((record) => {
-				if(!record) {
-					return exits.recordNotFound();
-				}
-				console.log(record);
-				return exits.success(record);
-			})
+		    return exits.success();	
 	
 	}
 };
