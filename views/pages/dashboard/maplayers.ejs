@@ -10,6 +10,77 @@
     </div>
     <hr/>
     <div id="maplayers-container" >
+    	<% /* {{maplayers}} */ %>
+    	<% _.each(maplayers, function (maplayer) { %>
+	    	<div class="accordion" id="maplayers-accordion">
+			  <div class="card">
+			    <div class="card-header" id="maplayer-header" data-toggle="collapse" data-target="#collapseOne">
+			      <h5 class="mb-0">
+			        <button class="btn btn-link maplayer-header-btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			          <%= maplayer.name %>
+			        </button>
+			      </h5>
+			    </div>
+			
+			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#maplayers-accordion">
+			      <div class="card-body">
+			      	<div class="row">
+				        <div class="col-sm-6">
+				          <div class="form-group">
+				            <label for="maplayer-layerid">Layer ID</label>
+				            <input class="form-control" id="maplayer-layerid" name="maplayer-layerid" type="text" value="<%= maplayer.layerid %>" focus-first>
+				          </div>
+				        </div>
+				      </div>
+				      <div class="row">
+				        <div class="col-sm-6">
+			              <div class="form-group">
+						    <label for="maplayer-layertype">Layer Type</label>
+						    <select class="form-control" id="maplayer-layertype">
+						      <option value="point" <%= maplayer.layertype == 'point' ? 'selected' : ''%> >Point</option>
+						      <option value="polygon" <%= maplayer.layertype == 'polygon' ? 'selected' : ''%> >Polygon</option>
+						      <option value="line" <%= maplayer.layertype == 'line' ? 'selected' : ''%> >Line</option>
+						    </select>
+						  </div>
+				        </div>
+				      </div>
+				      <div class="row">
+				        <div class="col-sm-4">
+				          <div class="form-group">
+						  	<label for="maplayer-table">Table</label>
+				            <input class="form-control" id="maplayer-table" name="maplayer-table" type="text"  value="<%= maplayer.layertableref %>">
+						  </div>
+				        </div>
+				        <div class="col-sm-4">
+				          	<label for="maplayer-min">Minimum Zoom</label>
+				            <input class="form-control" id="maplayer-min" name="maplayer-min" type="text" value="<%= maplayer.minzoom %>">
+				        </div>
+				        <div class="col-sm-4">
+				        	<label for="maplayer-max">Maximum Zoom</label>
+				            <input class="form-control" id="maplayer-max" name="maplayer-max" type="text" value="<%= maplayer.maxzoom %>">
+				        </div>
+				      </div>
+				      <div class="row">
+				      	<div class="col-sm-12">
+				      		<div class="form-group">
+								<label for="maplayer-att">Attributes to Display:</label>
+								<textarea class="form-control" rows="3" id="maplayer-att" ><%= maplayer.layerattributesonclick %></textarea>
+							</div>
+				      	</div>
+				      </div>
+				      <div class="row">
+				      	<div class="col-sm-12">
+				      		<div class="form-group">
+								<label for="maplayer-url">URL:</label>
+								<textarea class="form-control" rows="3" id="maplayer-url" ><%= maplayer.url %></textarea>
+							</div>
+				      	</div>
+				      </div>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+	    <% }) %>
     	
     </div>
     <div id="maplayers-add-container" >
@@ -83,7 +154,7 @@
 	        </div>
 	        <div class="col-sm-6">
 	          <div class="form-group text-right">
-	            <button class="btn btn-warning fontColor" @click="hideAddForm()">Cancel</button>
+	            <button type="button" class="btn btn-warning fontColor" @click="hideAddForm()">Cancel</button>
 	            <ajax-button type="submit" :syncing="syncing" class="btn btn-success">Save changes</ajax-button>
 	          </div>
 	        </div>

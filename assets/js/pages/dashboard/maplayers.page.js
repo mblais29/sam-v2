@@ -3,6 +3,9 @@ parasails.registerPage('maplayers-main', {
   //  â•‘â•‘â•‘â•‘â•‘ â•‘ â•‘â• â•�â•£â•‘    â•šâ•�â•— â•‘ â• â•�â•£ â•‘ â•‘â•£
   //  â•©â•�â•šâ•�â•© â•© â•©â•© â•©â•©â•�â•�  â•šâ•�â•� â•© â•© â•© â•© â•šâ•�â•�
   data: {
+  	// Map Layers
+  	maplayers: '',
+  	
     // Form data
     formData: { /* … */ },
 
@@ -28,25 +31,13 @@ parasails.registerPage('maplayers-main', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    //…
+    
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-	hideAddForm: function() {
-		$('div#maplayers-add-container').fadeOut();
-		$('div#maplayers-add-container').find('input:text').val('');
-		$('div#maplayers-add-container').find('textarea').val('');
-		
-		return;
-	},
-	
-	openAddMapLayerForm: function() {
-		$('div#maplayers-add-container').fadeIn();
-		return;
-	},
 	
     submittedForm: async function(response) {
       if(response.APIstatus=="200") {
@@ -81,6 +72,18 @@ parasails.registerPage('maplayers-main', {
 
       return argins;
     },
+    
+    hideAddForm: function() {
+		$('div#maplayers-add-container').fadeOut();
+		$('div#maplayers-add-container').find('input:text').val('');
+		$('div#maplayers-add-container').find('textarea').val('');
+		return  false;
+	},
+	
+	openAddMapLayerForm: function() {
+		$('div#maplayers-add-container').fadeIn();
+		return  false;
+	},
 
   }
 });

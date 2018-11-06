@@ -22,7 +22,10 @@ module.exports = {
 	
 	
 	fn: async function (inputs, exits) {
-		    return exits.success();	
+			var maplayers = await Maplayers.find().populate('layerstyle');
+		    return exits.success({
+		    	maplayers: maplayers
+		    });	
 	
 	}
 };

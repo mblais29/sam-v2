@@ -70,8 +70,7 @@ module.exports = {
 	  },
 	  
 	  fn: async function (inputs, exits) {
-
-	
+		
 	    // Build up data for the new maplayer record and save it to the database.
 	    var newMaplayerRecord = await Maplayers.create(Object.assign({
 	      layerid: inputs.layerid,
