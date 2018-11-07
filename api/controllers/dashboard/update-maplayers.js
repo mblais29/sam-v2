@@ -1,15 +1,15 @@
 module.exports = {
-	
-	friendlyName: 'Maplayers',
 
 
-  	description: 'Create a new maplayer',
-  	
-  	extendedDescription: `This creates a new map layer`,
-  	
-  	inputs: {
+  friendlyName: 'Update maplayers',
 
-	    layerid: {
+
+  description: 'Update the maplayers.',
+
+
+  inputs: {
+
+    	layerid: {
 	      required: true,
 	      type: 'string',
 	      description: 'The new map layer id'
@@ -55,22 +55,15 @@ module.exports = {
 			type: 'number',
 			description: 'The map layer maximum zoom level.'
 		}
-	
-	  },
-	  
-	  exits: {
 
-	    invalid: {
-	      responseType: 'badRequest'
-	    }
-	
-	  },
-	  
-	  fn: async function (inputs, exits) {
-		
-	    // Build up data for the new maplayer record and save it to the database.
-	    var newMaplayerRecord = await Maplayers.create(Object.assign({
-	      layerid: inputs.layerid,
+  },
+
+
+  fn: async function (inputs, exits) {
+
+    // Update the record for the the maplayer.
+    await Maplayers.update({ layerid: newMaplayerRecord.layerid })
+    .set(Object.assign({
 	      name: inputs.name,
 	      url: inputs.url,
 	      layertableref: inputs.layertableref,
@@ -81,11 +74,10 @@ module.exports = {
 	      maxzoom: inputs.maxzoom,
 	      tosAcceptedByIp: this.req.ip
 	    }));
-	
-	    // Since everything went ok, send our 200 response.
-	    return exits.success();
-	
-	  }
+
+    return exits.success();
+
+  }
 
 
-}
+};

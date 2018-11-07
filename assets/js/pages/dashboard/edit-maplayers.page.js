@@ -1,4 +1,4 @@
-parasails.registerPage('maplayers-main', {
+parasails.registerPage('edit-maplayers-main', {
   //  â•¦â•”â•—â•”â•¦â•”â•¦â•—â•¦â•”â•�â•—â•¦    â•”â•�â•—â•”â•¦â•—â•”â•�â•—â•”â•¦â•—â•”â•�â•—
   //  â•‘â•‘â•‘â•‘â•‘ â•‘ â•‘â• â•�â•£â•‘    â•šâ•�â•— â•‘ â• â•�â•£ â•‘ â•‘â•£
   //  â•©â•�â•šâ•�â•© â•© â•©â•© â•©â•©â•�â•�  â•šâ•�â•� â•© â•© â•© â•© â•šâ•�â•�
@@ -72,21 +72,6 @@ parasails.registerPage('maplayers-main', {
 
       return argins;
     },
-    
-    hideAddForm: function() {
-		$('div#maplayers-add-container').hide();
-		$('div#maplayers-container').show();
-		$('div#maplayers-add-container').find('input:text').val('');
-		$('div#maplayers-add-container').find('textarea').val('');
-		return  false;
-	},
-	
-	openAddMapLayerForm: function() {
-		$('div#maplayers-add-container').show();
-		$('div#maplayers-container').hide();
-		
-		return  false;
-	},
 
   }
 });

@@ -12,7 +12,7 @@
     <div id="maplayers-container" >
     	<% /* {{maplayers}} */ %>
     	<% _.each(maplayers, function (maplayer) { %>
-	    	<div class="accordion" id="maplayers-accordion">
+			<div class="accordion" id="maplayers-accordion">
 			  <div class="card">
 			    <div class="card-header" id="maplayer-header" data-toggle="collapse" data-target="#collapseOne">
 			      <h5 class="mb-0">
@@ -42,6 +42,12 @@
 						      <option value="line" <%= maplayer.layertype == 'line' ? 'selected' : ''%> >Line</option>
 						    </select>
 						  </div>
+				        </div>
+				        <div class="col-sm-6">
+				          <div class="form-group">
+				            <label for="maplayer-name">Layer Name</label>
+				            <input class="form-control" id="maplayer-name" name="maplayer-name" type="text" value="<%= maplayer.name %>">
+				          </div>
 				        </div>
 				      </div>
 				      <div class="row">
@@ -75,6 +81,17 @@
 								<textarea class="form-control" rows="3" id="maplayer-url" ><%= maplayer.url %></textarea>
 							</div>
 				      	</div>
+				      </div>
+				      <div class="row">
+				        <div class="col-sm-6">
+				          <p class="text-danger" v-if="cloudError === 'emailAlreadyInUse'">There is already an account using that email address.</p>
+				          <p class="text-danger" v-else-if="cloudError">An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</p>
+				        </div>
+				        <div class="col-sm-6">
+				          <span class="float-sm-right">
+				            <a class="btn btn-sm btn-warning account-settings-button fontColor" href="/maplayers/edit/<%= maplayer.layerid %>">Edit</a>
+				          </span>
+				        </div>
 				      </div>
 			      </div>
 			    </div>

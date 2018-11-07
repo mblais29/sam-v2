@@ -1,0 +1,90 @@
+<div id="edit-maplayers-main">
+  <div class="container" >
+  	<div class="row">
+        <div class="col-sm-6">
+    		<h2>Edit Map Layer</h2>
+    	</div>
+    </div>
+    <hr/>
+    
+    <div id="edit-maplayers-container" >
+	    <ajax-form action="maplayers" :syncing.sync="syncing"  :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+	      <div class="row">
+	        <div class="col-sm-6">
+	          <div class="form-group">
+	            <label for="edit-maplayers-layerid">Layer ID</label>
+	            <input class="form-control" id="edit-maplayers-layerid" name="edit-maplayers-layerid" type="text"  :class="[formErrors.layerid ? 'is-invalid' : '']" v-model.trim="formData.layerid" focus-first>
+	            <div class="invalid-feedback" v-if="formErrors.layerid">No Layer ID.</div>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="col-sm-6">
+	          <div class="form-group">
+	            <label for="edit-maplayers-name">Layer Name</label>
+	            <input class="form-control" id="edit-maplayers-name" name="edit-maplayers-name" type="text"  :class="[formErrors.name ? 'is-invalid' : '']" v-model.trim="formData.name" >
+	            <div class="invalid-feedback" v-if="formErrors.name">No Layer Name.</div>
+	          </div>
+	        </div>
+	        <div class="col-sm-6">
+	          <div class="form-group">
+	            <label for="edit-maplayers-layertype">Layer Type</label>
+	            <input class="form-control" id="edit-maplayers-layertype" name="edit-maplayers-layertype" type="text"  :class="[formErrors.layertype ? 'is-invalid' : '']" v-model.trim="formData.layertype" >
+	            <div class="invalid-feedback" v-if="formErrors.layertype">No Layer Type Specified.</div>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="col-sm-4">
+	          <div class="form-group">
+			  	<label for="edit-maplayers-table">Table</label>
+	            <input class="form-control" id="edit-maplayers-table" name="edit-maplayers-table" type="text"  :class="[formErrors.layertableref ? 'is-invalid' : '']" v-model.trim="formData.layertableref">
+	            <div class="invalid-feedback" v-if="formErrors.layertableref">No Table Referenced.</div>
+			  </div>
+	        </div>
+	        <div class="col-sm-4">
+	          	<label for="edit-maplayers-min">Minimum Zoom</label>
+	            <input class="form-control" id="edit-maplayers-min" name="edit-maplayers-min" type="text"  :class="[formErrors.minzoom ? 'is-invalid' : '']" v-model.trim="formData.minzoom">
+	            <div class="invalid-feedback" v-if="formErrors.minzoom">No Minimum Zoom Set.</div>
+	        </div>
+	        <div class="col-sm-4">
+	        	<label for="edit-maplayers-max">Maximum Zoom</label>
+	            <input class="form-control" id="edit-maplayers-max" name="edit-maplayers-max" type="text"  :class="[formErrors.maxzoom ? 'is-invalid' : '']" v-model.trim="formData.maxzoom">
+	            <div class="invalid-feedback" v-if="formErrors.maxzoom">No Maximum Zoom Set.</div>
+	        </div>
+	      </div>
+	      <div class="row">
+	      	<div class="col-sm-12">
+	      		<div class="form-group">
+					<label for="edit-maplayers-att">Attributes to Display:</label>
+					<textarea class="form-control" rows="3" id="edit-maplayers-att" :class="[formErrors.layerattributesonclick ? 'is-invalid' : '']" v-model.trim="formData.layerattributesonclick"></textarea>
+					<div class="invalid-feedback" v-if="formErrors.layerattributesonclick">No Attributes.</div>
+				</div>
+	      	</div>
+	      </div>
+	      <div class="row">
+	      	<div class="col-sm-12">
+	      		<div class="form-group">
+					<label for="edit-maplayers-url">URL:</label>
+					<textarea class="form-control" rows="3" id="edit-maplayers-url" :class="[formErrors.url ? 'is-invalid' : '']" v-model.trim="formData.url"></textarea>
+					<div class="invalid-feedback" v-if="formErrors.url">No URL.</div>
+				</div>
+	      	</div>
+	      </div>
+	      <div class="row">
+	        <div class="col-sm-6">
+	        
+	        </div>
+	        <div class="col-sm-6">
+	          <div class="form-group text-right">
+	            <button type="button" class="btn btn-warning fontColor" @click="">Cancel</button>
+	            <ajax-button type="submit" :syncing="syncing" class="btn btn-success">Save</ajax-button>
+	          </div>
+	        </div>
+	      </div>
+	    </ajax-form>
+    </div>
+  </div>
+</div>
+<% /* block('localScripts', '<script src="/js/local/map/maplayers.page.js"></script>') */ %>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

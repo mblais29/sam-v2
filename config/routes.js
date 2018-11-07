@@ -18,7 +18,8 @@ module.exports.routes = {
   'GET /welcome':            { action: 'dashboard/view-welcome' },
   'GET /map':                { action: 'dashboard/view-map' },
   'GET /maplayers':          { action: 'dashboard/view-maplayers' },
-  'GET /maplayers/records':  { controller: 'view-maplayers', action: 'getMaplayerRecords' },
+  'GET /maplayers/edit/:layerid?':   { action: 'dashboard/view-edit-maplayers' },
+  
   
   'GET /faq':                { view:   'pages/faq' },
   'GET /legal/terms':        { view:   'pages/legal/terms' },
@@ -48,6 +49,7 @@ module.exports.routes = {
   'PUT   /api/v1/account/update-profile':             { action: 'account/update-profile' },
   'PUT   /api/v1/account/update-billing-card':        { action: 'account/update-billing-card' },
   'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
+  'PUT   /api/v1/dashboard/update-maplayers':            { action: 'dashboard/update-maplayers' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
   'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
