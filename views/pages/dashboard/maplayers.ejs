@@ -12,91 +12,94 @@
     <div id="maplayers-container" >
     	<% /* {{maplayers}} */ %>
     	<% _.each(maplayers, function (maplayer) { %>
-			<div class="accordion" id="maplayers-accordion">
-			  <div class="card">
-			    <div class="card-header" id="maplayer-header" data-toggle="collapse" data-target="#collapseOne">
-			      <h5 class="mb-0">
-			        <button class="btn btn-link maplayer-header-btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-			          <%= maplayer.name %>
-			        </button>
-			      </h5>
-			    </div>
-			
-			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#maplayers-accordion">
-			      <div class="card-body">
-			      	<div class="row">
-				        <div class="col-sm-6">
-				          <div class="form-group">
-				            <label for="maplayer-layerid">Layer ID</label>
-				            <input class="form-control" id="maplayer-layerid" name="maplayer-layerid" type="text" value="<%= maplayer.layerid %>" focus-first>
-				          </div>
-				        </div>
+    		<ajax-form action="updateMaplayers" :syncing.sync="syncing"  :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+				<div class="accordion" id="maplayers-accordion">
+				  <div class="card">
+				    <div class="card-header" id="maplayer-header" data-toggle="collapse" data-target="#collapseOne-<%= maplayer.layerid %>">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link maplayer-header-btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				          <%= maplayer.name %>
+				        </button>
+				      </h5>
+				    </div>
+				
+				    <div id="collapseOne-<%= maplayer.layerid %>" class="collapse" aria-labelledby="headingOne" data-parent="#maplayers-accordion">
+				      <div class="card-body">
+				      	<div class="row">
+					        <div class="col-sm-6">
+					          <div class="form-group">
+					            <label for="maplayer-editlayerid">Layer ID</label>
+					            <input class="form-control" id="maplayer-editlayerid" name="maplayer-editlayerid" type="text" value="<%= maplayer.layerid %>" focus-first>
+					          </div>
+					        </div>
+					      </div>
+					      <div class="row">
+					        <div class="col-sm-6">
+				              <div class="form-group">
+							    <label for="maplayer-editlayertype">Layer Type</label>
+							    <select class="form-control" id="maplayer-editlayertype" >
+							      <option value="point" <%= maplayer.layertype == 'point' ? 'selected' : ''%> >Point</option>
+							      <option value="polygon" <%= maplayer.layertype == 'polygon' ? 'selected' : ''%> >Polygon</option>
+							      <option value="line" <%= maplayer.layertype == 'line' ? 'selected' : ''%> >Line</option>
+							    </select>
+							  </div>
+					        </div>
+					        <div class="col-sm-6">
+					          <div class="form-group">
+					            <label for="maplayer-editname">Layer Name</label>
+					            <input class="form-control" id="maplayer-editname" name="maplayer-editname" type="text"  value="<%= maplayer.name %>">
+					          </div>
+					        </div>
+					      </div>
+					      <div class="row">
+					        <div class="col-sm-4">
+					          <div class="form-group">
+							  	<label for="maplayer-edittable">Table</label>
+					            <input class="form-control" id="maplayer-edittable" name="maplayer-edittable" type="text" value="<%= maplayer.layertableref %>">
+							  </div>
+					        </div>
+					        <div class="col-sm-4">
+					          	<label for="maplayer-editmin">Minimum Zoom</label>
+					            <input class="form-control" id="maplayer-editmin" name="maplayer-editmin" type="number" value="<%= maplayer.minzoom %>">
+					        </div>
+					        <div class="col-sm-4">
+					        	<label for="maplayer-editmax">Maximum Zoom</label>
+					            <input class="form-control" id="maplayer-editmax" name="maplayer-editmax" type="number" value="<%= maplayer.maxzoom %>">
+					        </div>
+					      </div>
+					      <div class="row">
+					      	<div class="col-sm-12">
+					      		<div class="form-group">
+									<label for="maplayer-editatt">Attributes to Display:</label>
+									<textarea class="form-control" rows="3" id="maplayer-editatt" name="maplayer-editatt" ><%= maplayer.layerattributesonclick %></textarea>
+								</div>
+					      	</div>
+					      </div>
+					      <div class="row">
+					      	<div class="col-sm-12">
+					      		<div class="form-group">
+									<label for="maplayer-editurl">URL:</label>
+									<textarea class="form-control" rows="3" id="maplayer-editurl" name="maplayer-editurl" ><%= maplayer.url %></textarea>
+								</div>
+					      	</div>
+					      </div>
+					      <div class="row">
+					        <div class="col-sm-6">
+					          <p class="text-danger" v-if="cloudError === 'emailAlreadyInUse'">There is already an account using that email address.</p>
+					          <p class="text-danger" v-else-if="cloudError">An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</p>
+					        </div>
+					        <div class="col-sm-6">
+					          <div class="form-group text-right">
+					            <button type="button" class="btn btn-warning fontColor" @click="hideAddForm()">Cancel</button>
+					            <ajax-button type="submit" :syncing="syncing" class="btn btn-success">Save changes</ajax-button>
+					          </div>
+					        </div>
+					      </div>
 				      </div>
-				      <div class="row">
-				        <div class="col-sm-6">
-			              <div class="form-group">
-						    <label for="maplayer-layertype">Layer Type</label>
-						    <select class="form-control" id="maplayer-layertype">
-						      <option value="point" <%= maplayer.layertype == 'point' ? 'selected' : ''%> >Point</option>
-						      <option value="polygon" <%= maplayer.layertype == 'polygon' ? 'selected' : ''%> >Polygon</option>
-						      <option value="line" <%= maplayer.layertype == 'line' ? 'selected' : ''%> >Line</option>
-						    </select>
-						  </div>
-				        </div>
-				        <div class="col-sm-6">
-				          <div class="form-group">
-				            <label for="maplayer-name">Layer Name</label>
-				            <input class="form-control" id="maplayer-name" name="maplayer-name" type="text" value="<%= maplayer.name %>">
-				          </div>
-				        </div>
-				      </div>
-				      <div class="row">
-				        <div class="col-sm-4">
-				          <div class="form-group">
-						  	<label for="maplayer-table">Table</label>
-				            <input class="form-control" id="maplayer-table" name="maplayer-table" type="text"  value="<%= maplayer.layertableref %>">
-						  </div>
-				        </div>
-				        <div class="col-sm-4">
-				          	<label for="maplayer-min">Minimum Zoom</label>
-				            <input class="form-control" id="maplayer-min" name="maplayer-min" type="text" value="<%= maplayer.minzoom %>">
-				        </div>
-				        <div class="col-sm-4">
-				        	<label for="maplayer-max">Maximum Zoom</label>
-				            <input class="form-control" id="maplayer-max" name="maplayer-max" type="text" value="<%= maplayer.maxzoom %>">
-				        </div>
-				      </div>
-				      <div class="row">
-				      	<div class="col-sm-12">
-				      		<div class="form-group">
-								<label for="maplayer-att">Attributes to Display:</label>
-								<textarea class="form-control" rows="3" id="maplayer-att" ><%= maplayer.layerattributesonclick %></textarea>
-							</div>
-				      	</div>
-				      </div>
-				      <div class="row">
-				      	<div class="col-sm-12">
-				      		<div class="form-group">
-								<label for="maplayer-url">URL:</label>
-								<textarea class="form-control" rows="3" id="maplayer-url" ><%= maplayer.url %></textarea>
-							</div>
-				      	</div>
-				      </div>
-				      <div class="row">
-				        <div class="col-sm-6">
-				          <p class="text-danger" v-if="cloudError === 'emailAlreadyInUse'">There is already an account using that email address.</p>
-				          <p class="text-danger" v-else-if="cloudError">An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</p>
-				        </div>
-				        <div class="col-sm-6">
-				          <span class="float-sm-right">
-				            <a class="btn btn-sm btn-warning account-settings-button fontColor" href="/maplayers/edit/<%= maplayer.layerid %>">Edit</a>
-				          </span>
-				        </div>
-				      </div>
-			      </div>
-			    </div>
-			  </div>
-			</div>
+				    </div>
+				  </div>
+				</div>
+			</ajax-form>
 	    <% }) %>
     	
     </div>

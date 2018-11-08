@@ -18,7 +18,6 @@ module.exports.routes = {
   'GET /welcome':            { action: 'dashboard/view-welcome' },
   'GET /map':                { action: 'dashboard/view-map' },
   'GET /maplayers':          { action: 'dashboard/view-maplayers' },
-  'GET /maplayers/edit/:layerid?':   { action: 'dashboard/view-edit-maplayers' },
   
   
   'GET /faq':                { view:   'pages/faq' },

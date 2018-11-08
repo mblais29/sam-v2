@@ -21,11 +21,10 @@ module.exports = {
 	},
 	
 	
-	fn: async function (inputs, exits, req) {
-			//var maplayers = await Maplayers.find().populate('layerstyle');
-			console.log(req);
+	fn: async function (inputs, exits) {
+
 		    return exits.success();	
 	
-	}
+	},
 };
 

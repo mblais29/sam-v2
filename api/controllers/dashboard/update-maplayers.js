@@ -9,29 +9,29 @@ module.exports = {
 
   inputs: {
 
-    	layerid: {
+    	editlayerid: {
 	      required: true,
 	      type: 'string',
 	      description: 'The new map layer id'
 	    },
 	
-	    name: {
+	    editname: {
 	      required: true,
 	      type: 'string',
 	      description: 'The map layer name'
 	    },
 	
-	    url:  {
+	    editurl:  {
 	      type: 'string',
 	      description: 'The map layers datasource.'
 	    },
 	    
-	    layertableref:  {
+	    edittable:  {
 	      type: 'string',
 	      description: 'The map layers table data.'
 	    },
 	    
-	    layertype:  {
+	    editlayertype:  {
 	      type: 'string',
 	      enum: ['polygon', 'point', 'line'],
 	      description: 'The map layer type.'
@@ -42,16 +42,16 @@ module.exports = {
 	      description: 'The map layer style.'
 	    },
 	    
-	    layerattributesonclick: {
+	    editatt: {
 			type: 'string',
 			description: 'The map layer popup attributes.'
 		},
 		
-		minzoom:{
+		editmin:{
 			type: 'number',
 			description: 'The map layer minimum zoom level.'
 		},
-		maxzoom: {
+		editmax: {
 			type: 'number',
 			description: 'The map layer maximum zoom level.'
 		}
@@ -62,16 +62,15 @@ module.exports = {
   fn: async function (inputs, exits) {
 
     // Update the record for the the maplayer.
-    await Maplayers.update({ layerid: newMaplayerRecord.layerid })
+    await Maplayers.update({ layerid: inputs.editlayerid })
     .set(Object.assign({
-	      name: inputs.name,
-	      url: inputs.url,
-	      layertableref: inputs.layertableref,
-	      layertype: inputs.layertype,
-	      layerstyle: inputs.layerstyle,
-	      layerattributesonclick: inputs.layerattributesonclick,
-	      minzoom: inputs.minzoom,
-	      maxzoom: inputs.maxzoom,
+	      name: inputs.editname,
+	      url: inputs.editurl,
+	      layertableref: inputs.edittable,
+	      layertype: inputs.editlayertype,
+	      layerattributesonclick: inputs.editatt,
+	      minzoom: inputs.editmin,
+	      maxzoom: inputs.editmax,
 	      tosAcceptedByIp: this.req.ip
 	    }));
 
