@@ -1,0 +1,92 @@
+<div id="maplayers-main" v-cloak>
+  <div class="container" >
+  	<div class="row">
+        <div class="col-sm-6">
+    		<h1>Map Layers</h1>
+    	</div>
+    	<div class="col-sm-6">
+    		<button type="button" class="btn btn-outline-primary float-right" @click="openAddMapLayerForm()">Add</button>
+    	</div>
+    </div>
+    <hr/>
+
+	<div id="maplayers-add-container">
+	    <ajax-form action="maplayers" :syncing.sync="syncing"  :cloud-error.sync="cloudError" @submitted="submittedAddForm()" :handle-parsing="handleAddParsingForm">
+	      <div class="row">
+	        <div class="col-sm-6">
+	          <div class="form-group">
+	            <label for="maplayers-layerid">Layer ID</label>
+	            <input class="form-control" id="maplayers-layerid" name="maplayers-layerid" type="text"  :class="[formErrors.layerid ? 'is-invalid' : '']" v-model.trim="formAddData.layerid" focus-first>
+	            <div class="invalid-feedback" v-if="formErrors.layerid">No Layer ID.</div>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="col-sm-6">
+	          <div class="form-group">
+	            <label for="maplayers-name">Layer Name</label>
+	            <input class="form-control" id="maplayers-name" name="maplayers-name" type="text"  :class="[formErrors.name ? 'is-invalid' : '']" v-model.trim="formAddData.name" >
+	            <div class="invalid-feedback" v-if="formErrors.name">No Layer Name.</div>
+	          </div>
+	        </div>
+	        <div class="col-sm-6">
+	          <div class="form-group">
+	            <label for="maplayers-layertype">Layer Type</label>
+	            <input class="form-control" id="maplayers-layertype" name="maplayers-layertype" type="text"  :class="[formErrors.layertype ? 'is-invalid' : '']" v-model.trim="formAddData.layertype" >
+	            <div class="invalid-feedback" v-if="formErrors.layertype">No Layer Type Specified.</div>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="col-sm-4">
+	          <div class="form-group">
+			  	<label for="maplayers-table">Table</label>
+	            <input class="form-control" id="maplayers-table" name="maplayers-table" type="text"  :class="[formErrors.layertableref ? 'is-invalid' : '']" v-model.trim="formAddData.layertableref">
+	            <div class="invalid-feedback" v-if="formErrors.layertableref">No Table Referenced.</div>
+			  </div>
+	        </div>
+	        <div class="col-sm-4">
+	          	<label for="maplayers-min">Minimum Zoom</label>
+	            <input class="form-control" id="maplayers-min" name="maplayers-min" type="text"  :class="[formErrors.minzoom ? 'is-invalid' : '']" v-model.trim="formAddData.minzoom">
+	            <div class="invalid-feedback" v-if="formErrors.minzoom">No Minimum Zoom Set.</div>
+	        </div>
+	        <div class="col-sm-4">
+	        	<label for="maplayers-max">Maximum Zoom</label>
+	            <input class="form-control" id="maplayers-max" name="maplayers-max" type="text"  :class="[formErrors.maxzoom ? 'is-invalid' : '']" v-model.trim="formAddData.maxzoom">
+	            <div class="invalid-feedback" v-if="formErrors.maxzoom">No Maximum Zoom Set.</div>
+	        </div>
+	      </div>
+	      <div class="row">
+	      	<div class="col-sm-12">
+	      		<div class="form-group">
+					<label for="maplayers-att">Attributes to Display:</label>
+					<textarea class="form-control" rows="3" id="maplayers-att" :class="[formErrors.layerattributesonclick ? 'is-invalid' : '']" v-model.trim="formAddData.layerattributesonclick"></textarea>
+					<div class="invalid-feedback" v-if="formErrors.layerattributesonclick">No Attributes.</div>
+				</div>
+	      	</div>
+	      </div>
+	      <div class="row">
+	      	<div class="col-sm-12">
+	      		<div class="form-group">
+					<label for="maplayers-url">URL:</label>
+					<textarea class="form-control" rows="3" id="maplayers-url" :class="[formErrors.url ? 'is-invalid' : '']" v-model.trim="formAddData.url"></textarea>
+					<div class="invalid-feedback" v-if="formErrors.url">No URL.</div>
+				</div>
+	      	</div>
+	      </div>
+	      <div class="row">
+	        <div class="col-sm-6">
+	          <p class="text-danger" v-if="cloudError === 'emailAlreadyInUse'">There is already an account using that email address.</p>
+	          <p class="text-danger" v-else-if="cloudError">An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</p>
+	        </div>
+	        <div class="col-sm-6">
+	          <div class="form-group text-right">
+	            <button type="button" class="btn btn-warning fontColor" @click="hideAddForm()">Cancel</button>
+	            <ajax-button type="submit" :syncing="syncing" class="btn btn-success">Save changes</ajax-button>
+	          </div>
+	        </div>
+	      </div>
+	    </ajax-form>
+	</div>
+  </div>
+</div>

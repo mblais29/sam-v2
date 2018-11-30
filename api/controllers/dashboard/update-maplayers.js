@@ -16,7 +16,7 @@ module.exports = {
 	    },
 	
 	    editname: {
-	      required: true,
+	      //required: true,
 	      type: 'string',
 	      description: 'The map layer name'
 	    },

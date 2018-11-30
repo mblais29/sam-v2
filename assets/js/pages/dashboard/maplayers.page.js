@@ -1,13 +1,11 @@
-parasails.registerPage('maplayers-main', {
+parasails.registerPage('maplayers', {
   //  â•¦â•”â•—â•”â•¦â•”â•¦â•—â•¦â•”â•�â•—â•¦    â•”â•�â•—â•”â•¦â•—â•”â•�â•—â•”â•¦â•—â•”â•�â•—
   //  â•‘â•‘â•‘â•‘â•‘ â•‘ â•‘â• â•�â•£â•‘    â•šâ•�â•— â•‘ â• â•�â•£ â•‘ â•‘â•£
   //  â•©â•�â•šâ•�â•© â•© â•©â•© â•©â•©â•�â•�  â•šâ•�â•� â•© â•© â•© â•© â•šâ•�â•�
   data: {
-  	// Map Layers
-  	maplayers: '',
-  	
-    // Form data
-    formData: { /* … */ },
+    
+    // Form Update Data
+    formData: {},
 
     // For tracking client-side validation errors in our form.
     // > Has property set to `true` for each invalid property in `formData`.
@@ -31,26 +29,20 @@ parasails.registerPage('maplayers-main', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    
+
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-	
-    submittedForm: async function(response) {
-      if(response.APIstatus=="200") {
-        // If email confirmation is enabled, show the success message.
-        this.cloudSuccess = true;
-      }
-      else { 
-        // Error message will display in the 
-        this.syncing = true; 
-      }
+   
+    updateMapLayerSubmit: async function(response) {
+      this.syncing = true;
+      //window.location = '/maplayers';
     },
-
-    handleParsingForm: function() {
+    
+    handleUpdateMaplayerParsingForm: function() {
       // Clear out any pre-existing error messages.
       this.formErrors = {};
 

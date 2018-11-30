@@ -1,4 +1,4 @@
-<div id="maplayers-main" v-cloak>
+<div id="maplayers" v-cloak>
   <div class="container" >
   	<div class="row">
         <div class="col-sm-6">
@@ -10,9 +10,101 @@
     </div>
     <hr/>
     <div id="maplayers-container" >
-    	<% /* {{maplayers}} */ %>
+    	<ajax-form action="updateMaplayers" v-for="(maplayer, index) in formData" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="updateMapLayerSubmit()" :handle-parsing="handleUpdateMaplayerParsingForm">
+				<div class="accordion" id="maplayers-accordion">
+				  <div class="card">
+				    <div class="card-header" id="maplayer-header" data-toggle="collapse" :data-target="'#' + maplayer.layerid">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link maplayer-header-btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				          {{maplayer.name}}
+				        </button>
+				      </h5>
+				    </div>
+				
+				    <div :id="maplayer.layerid" class="collapse" aria-labelledby="headingOne" data-parent="#maplayers-accordion">
+				      <div class="card-body">
+				      	 <div class="row">
+					        <div class="col-sm-6">
+					          <div class="form-group">
+					            <label for="maplayer-editlayerid">Layer ID</label>
+					            <input class="form-control" id="maplayer-editlayerid" name="maplayer-editlayerid" type="text" v-model="formData.editlayerid" v-bind:value="maplayer.layerid" :class="[formErrors.editlayerid ? 'is-invalid' : '']" focus-first />
+					          </div>
+					        </div>
+					      </div>
+					      <div class="row">
+					        <div class="col-sm-6">
+				              <div class="form-group">
+							    <label for="maplayer-editlayertype">Layer Type</label>
+							    <select class="form-control" id="maplayer-editlayertype">
+							      <option value="point" v-if="maplayer.layertype == 'point'" selected>Point</option>
+							      <option value="point" v-else>Point</option>
+							      <option value="polygon" v-if="maplayer.layertype == 'polygon'" selected>Polygon</option>
+							      <option value="polygon" v-else>Polygon</option>
+							      <option value="line" v-if="maplayer.layertype == 'line'" selected>Line</option>
+							      <option value="line" v-else>Line</option>
+							    </select>
+							  </div>
+					        </div>
+					        <div class="col-sm-6">
+					          <div class="form-group">
+					            <label for="maplayer-editname">Layer Name</label>
+					            <input class="form-control" id="maplayer-editname" name="maplayer-editname" type="text" :value="maplayer.name">
+					          </div>
+					        </div>
+					      </div>
+					      <div class="row">
+					        <div class="col-sm-4">
+					          <div class="form-group">
+							  	<label for="maplayer-edittable">Table</label>
+					            <input class="form-control" id="maplayer-edittable" name="maplayer-edittable" type="text" :value="maplayer.layertableref">
+							  </div>
+					        </div>
+					        <div class="col-sm-4">
+					          	<label for="maplayer-editmin">Minimum Zoom</label>
+					            <input class="form-control" id="maplayer-editmin" name="maplayer-editmin" type="number" :value="maplayer.minzoom">
+					        </div>
+					        <div class="col-sm-4">
+					        	<label for="maplayer-editmax">Maximum Zoom</label>
+					            <input class="form-control" id="maplayer-editmax" name="maplayer-editmax" type="number" :value="maplayer.maxzoom">
+					        </div>
+					      </div>
+					      <div class="row">
+					      	<div class="col-sm-12">
+					      		<div class="form-group">
+									<label for="maplayer-editatt">Attributes to Display:</label>
+									<textarea class="form-control" rows="3" id="maplayer-editatt" name="maplayer-editatt" >{{maplayer.layerattributesonclick}}</textarea>
+								</div>
+					      	</div>
+					      </div>
+					      <div class="row">
+					      	<div class="col-sm-12">
+					      		<div class="form-group">
+									<label for="maplayer-editurl">URL:</label>
+									<textarea class="form-control" rows="3" id="maplayer-editurl" name="maplayer-editurl" >{{maplayer.url}}</textarea>
+								</div>
+					      	</div>
+					      </div>
+					      <div class="row">
+					        <div class="col-sm-6">
+					          <p class="text-danger" v-if="cloudError === 'emailAlreadyInUse'">There is already an account using that email address.</p>
+					          <p class="text-danger" v-else-if="cloudError">An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</p>
+					        </div>
+					        <div class="col-sm-6">
+					          <div class="form-group text-right">
+					            <button type="button" class="btn btn-warning fontColor" @click="hideAddForm()">Cancel</button>
+					            <ajax-button type="submit" :syncing="syncing" class="btn btn-success">Save changes</ajax-button>
+					          </div>
+					        </div>
+					      </div>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			</ajax-form>
+		
+    	<% /* %>
     	<% _.each(maplayers, function (maplayer) { %>
-    		<ajax-form action="updateMaplayers" :syncing.sync="syncing"  :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+    		<ajax-form action="updateMaplayers" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="updateMapLayerSubmit()" :handle-parsing="handleUpdateMaplayerParsingForm">
 				<div class="accordion" id="maplayers-accordion">
 				  <div class="card">
 				    <div class="card-header" id="maplayer-header" data-toggle="collapse" data-target="#collapseOne-<%= maplayer.layerid %>">
@@ -25,11 +117,11 @@
 				
 				    <div id="collapseOne-<%= maplayer.layerid %>" class="collapse" aria-labelledby="headingOne" data-parent="#maplayers-accordion">
 				      <div class="card-body">
-				      	<div class="row">
+				      	 <div class="row">
 					        <div class="col-sm-6">
 					          <div class="form-group">
 					            <label for="maplayer-editlayerid">Layer ID</label>
-					            <input class="form-control" id="maplayer-editlayerid" name="maplayer-editlayerid" type="text" value="<%= maplayer.layerid %>" focus-first>
+					            <input class="form-control" id="maplayer-editlayerid" name="maplayer-editlayerid" type="text" value="<%= maplayer.layerid %>" :class="[formErrors.editlayerid ? 'is-invalid' : '']" v-model.trim="formData.editlayerid"  focus-first>
 					          </div>
 					        </div>
 					      </div>
@@ -37,7 +129,7 @@
 					        <div class="col-sm-6">
 				              <div class="form-group">
 							    <label for="maplayer-editlayertype">Layer Type</label>
-							    <select class="form-control" id="maplayer-editlayertype" >
+							    <select class="form-control" id="maplayer-editlayertype">
 							      <option value="point" <%= maplayer.layertype == 'point' ? 'selected' : ''%> >Point</option>
 							      <option value="polygon" <%= maplayer.layertype == 'polygon' ? 'selected' : ''%> >Polygon</option>
 							      <option value="line" <%= maplayer.layertype == 'line' ? 'selected' : ''%> >Line</option>
@@ -47,7 +139,7 @@
 					        <div class="col-sm-6">
 					          <div class="form-group">
 					            <label for="maplayer-editname">Layer Name</label>
-					            <input class="form-control" id="maplayer-editname" name="maplayer-editname" type="text"  value="<%= maplayer.name %>">
+					            <input class="form-control" id="maplayer-editname" name="maplayer-editname" type="text" value="<%= maplayer.name %>">
 					          </div>
 					        </div>
 					      </div>
@@ -101,85 +193,7 @@
 				</div>
 			</ajax-form>
 	    <% }) %>
-    	
-    </div>
-    <div id="maplayers-add-container" >
-	    <ajax-form action="maplayers" :syncing.sync="syncing"  :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
-	      <div class="row">
-	        <div class="col-sm-6">
-	          <div class="form-group">
-	            <label for="maplayers-layerid">Layer ID</label>
-	            <input class="form-control" id="maplayers-layerid" name="maplayers-layerid" type="text"  :class="[formErrors.layerid ? 'is-invalid' : '']" v-model.trim="formData.layerid" focus-first>
-	            <div class="invalid-feedback" v-if="formErrors.layerid">No Layer ID.</div>
-	          </div>
-	        </div>
-	      </div>
-	      <div class="row">
-	        <div class="col-sm-6">
-	          <div class="form-group">
-	            <label for="maplayers-name">Layer Name</label>
-	            <input class="form-control" id="maplayers-name" name="maplayers-name" type="text"  :class="[formErrors.name ? 'is-invalid' : '']" v-model.trim="formData.name" >
-	            <div class="invalid-feedback" v-if="formErrors.name">No Layer Name.</div>
-	          </div>
-	        </div>
-	        <div class="col-sm-6">
-	          <div class="form-group">
-	            <label for="maplayers-layertype">Layer Type</label>
-	            <input class="form-control" id="maplayers-layertype" name="maplayers-layertype" type="text"  :class="[formErrors.layertype ? 'is-invalid' : '']" v-model.trim="formData.layertype" >
-	            <div class="invalid-feedback" v-if="formErrors.layertype">No Layer Type Specified.</div>
-	          </div>
-	        </div>
-	      </div>
-	      <div class="row">
-	        <div class="col-sm-4">
-	          <div class="form-group">
-			  	<label for="maplayers-table">Table</label>
-	            <input class="form-control" id="maplayers-table" name="maplayers-table" type="text"  :class="[formErrors.layertableref ? 'is-invalid' : '']" v-model.trim="formData.layertableref">
-	            <div class="invalid-feedback" v-if="formErrors.layertableref">No Table Referenced.</div>
-			  </div>
-	        </div>
-	        <div class="col-sm-4">
-	          	<label for="maplayers-min">Minimum Zoom</label>
-	            <input class="form-control" id="maplayers-min" name="maplayers-min" type="text"  :class="[formErrors.minzoom ? 'is-invalid' : '']" v-model.trim="formData.minzoom">
-	            <div class="invalid-feedback" v-if="formErrors.minzoom">No Minimum Zoom Set.</div>
-	        </div>
-	        <div class="col-sm-4">
-	        	<label for="maplayers-max">Maximum Zoom</label>
-	            <input class="form-control" id="maplayers-max" name="maplayers-max" type="text"  :class="[formErrors.maxzoom ? 'is-invalid' : '']" v-model.trim="formData.maxzoom">
-	            <div class="invalid-feedback" v-if="formErrors.maxzoom">No Maximum Zoom Set.</div>
-	        </div>
-	      </div>
-	      <div class="row">
-	      	<div class="col-sm-12">
-	      		<div class="form-group">
-					<label for="maplayers-att">Attributes to Display:</label>
-					<textarea class="form-control" rows="3" id="maplayers-att" :class="[formErrors.layerattributesonclick ? 'is-invalid' : '']" v-model.trim="formData.layerattributesonclick"></textarea>
-					<div class="invalid-feedback" v-if="formErrors.layerattributesonclick">No Attributes.</div>
-				</div>
-	      	</div>
-	      </div>
-	      <div class="row">
-	      	<div class="col-sm-12">
-	      		<div class="form-group">
-					<label for="maplayers-url">URL:</label>
-					<textarea class="form-control" rows="3" id="maplayers-url" :class="[formErrors.url ? 'is-invalid' : '']" v-model.trim="formData.url"></textarea>
-					<div class="invalid-feedback" v-if="formErrors.url">No URL.</div>
-				</div>
-	      	</div>
-	      </div>
-	      <div class="row">
-	        <div class="col-sm-6">
-	          <p class="text-danger" v-if="cloudError === 'emailAlreadyInUse'">There is already an account using that email address.</p>
-	          <p class="text-danger" v-else-if="cloudError">An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</p>
-	        </div>
-	        <div class="col-sm-6">
-	          <div class="form-group text-right">
-	            <button type="button" class="btn btn-warning fontColor" @click="hideAddForm()">Cancel</button>
-	            <ajax-button type="submit" :syncing="syncing" class="btn btn-success">Save changes</ajax-button>
-	          </div>
-	        </div>
-	      </div>
-	    </ajax-form>
+    	<% */ %>
     </div>
   </div>
 </div>
